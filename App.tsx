@@ -1,14 +1,14 @@
 
 import React, { useState, useEffect, useMemo } from 'react';
 import Sidebar from './components/Sidebar';
-import LinkCard from './components/LinkCard';
+import LinkButton from './components/LinkButton';
 import AddLinkModal from './components/AddLinkModal';
-import { LinkItem, AppStatus } from './types';
-import { INITIAL_LINKS } from './constants';
+import { LinkItem, Category } from './types';
+import { INITIAL_LINKS, DEFAULT_CATEGORIES } from './constants';
 
 const App: React.FC = () => {
   const [links, setLinks] = useState<LinkItem[]>([]);
-  const [activeCategory, setActiveCategory] = useState('all');
+  const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -28,19 +28,21 @@ const App: React.FC = () => {
     localStorage.setItem('workflow_links', JSON.stringify(links));
   }, [links]);
 
-  const filteredLinks = useMemo(() => {
+  // Global search or category filtering
+  const displayLinks = useMemo(() => {
+    const query = searchQuery.toLowerCase().trim();
+    
     return links.filter(link => {
-      const matchesCategory = activeCategory === 'all' 
-        ? true 
-        : activeCategory === 'favorites' 
-          ? link.isFavorite 
-          : link.category === activeCategory;
+      const matchesSearch = !query || 
+                           link.title.toLowerCase().includes(query) || 
+                           link.url.toLowerCase().includes(query) ||
+                           link.tags.some(t => t.toLowerCase().includes(query));
       
-      const matchesSearch = link.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                           link.url.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                           link.tags.some(t => t.toLowerCase().includes(searchQuery.toLowerCase()));
+      // If there's a search query, we ignore the category restriction (Global Search)
+      if (query) return matchesSearch;
       
-      return matchesCategory && matchesSearch;
+      // If no query, we filter by category
+      return activeCategory ? link.category === activeCategory : false;
     }).sort((a, b) => b.createdAt - a.createdAt);
   }, [links, activeCategory, searchQuery]);
 
@@ -52,12 +54,14 @@ const App: React.FC = () => {
     setLinks(prev => [newLink, ...prev]);
   };
 
-  const handleToggleFavorite = (id: string) => {
-    setLinks(prev => prev.map(l => l.id === id ? { ...l, isFavorite: !l.isFavorite } : l));
-  };
+  const currentCategory = useMemo(() => {
+    return DEFAULT_CATEGORIES.find(c => c.id === activeCategory);
+  }, [activeCategory]);
+
+  const isSearching = searchQuery.trim().length > 0;
 
   return (
-    <div className="flex h-screen bg-slate-50 overflow-hidden text-slate-900">
+    <div className="flex h-screen bg-slate-50 overflow-hidden text-slate-900 font-inter">
       {/* Mobile Sidebar Overlay */}
       {isSidebarOpen && (
         <div 
@@ -67,10 +71,15 @@ const App: React.FC = () => {
       )}
 
       <Sidebar 
-        activeCategory={activeCategory} 
+        activeCategory={activeCategory || ''} 
         onSelectCategory={(id) => {
           setActiveCategory(id);
           setIsSidebarOpen(false);
+          setSearchQuery(''); // Limpa a busca ao selecionar categoria para focar no departamento
+        }}
+        onGoHome={() => {
+          setActiveCategory(null);
+          setSearchQuery('');
         }}
         isOpen={isSidebarOpen}
       />
@@ -93,78 +102,112 @@ const App: React.FC = () => {
                 </div>
                 <input
                   type="text"
-                  placeholder="Pesquisar por título, URL ou tags..."
-                  className="w-full bg-slate-50 border border-slate-200 rounded-2xl pl-11 pr-4 py-2.5 outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:bg-white transition-all text-sm text-slate-800"
+                  placeholder="Pesquisar em todos os links..."
+                  className="w-full bg-slate-50 border border-slate-200 rounded-2xl pl-11 pr-4 py-3 outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:bg-white transition-all text-sm text-slate-800 placeholder:text-slate-400 shadow-inner"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />
               </div>
             </div>
 
-            {/* Logo replacement for Add Link Button */}
             <div className="flex items-center space-x-3 select-none">
-              <div className="hidden sm:flex items-center space-x-2">
-                <div className="h-8 w-[2px] bg-slate-200 mx-2"></div>
-                <div className="flex items-center space-x-2 bg-blue-50 px-4 py-2 rounded-xl border border-blue-100">
-                   <i className="fa-solid fa-link text-blue-600 text-sm"></i>
-                   <span className="text-blue-700 font-black text-sm tracking-tighter uppercase">Azul Links</span>
-                </div>
-              </div>
+              <button 
+                onClick={() => {
+                    setActiveCategory(null);
+                    setSearchQuery('');
+                }}
+                className="hidden sm:flex items-center space-x-2 bg-blue-600 px-5 py-2.5 rounded-xl shadow-lg shadow-blue-100 hover:bg-blue-700 transition-all transform hover:-translate-y-0.5 active:translate-y-0"
+              >
+                 <i className="fa-solid fa-house text-white text-xs"></i>
+                 <span className="text-white font-black text-xs tracking-widest uppercase">Início</span>
+              </button>
             </div>
           </div>
         </header>
 
-        {/* Content */}
-        <div className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8">
-          <div className="max-w-7xl mx-auto">
-            <div className="flex items-center justify-between mb-8">
-              <div>
-                <h2 className="text-2xl font-bold text-slate-800 capitalize tracking-tight">
-                  {activeCategory === 'all' ? 'Seu Dashboard' : activeCategory.replace(/_/g, ' ')}
-                </h2>
-                <p className="text-slate-500 text-sm mt-1">
-                  {filteredLinks.length} {filteredLinks.length === 1 ? 'link organizado' : 'links organizados'}
-                </p>
-              </div>
-              
-              <div className="flex items-center bg-white rounded-xl border border-slate-200 p-1 shadow-sm">
-                <button className="p-2 text-slate-400 hover:text-blue-600 bg-slate-50 rounded-lg transition-colors">
-                  <i className="fa-solid fa-grid-2"></i>
-                </button>
-                <button className="p-2 text-slate-400 hover:text-blue-600 rounded-lg transition-colors ml-1">
-                  <i className="fa-solid fa-list"></i>
-                </button>
-              </div>
-            </div>
-
-            {filteredLinks.length > 0 ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                {filteredLinks.map((link) => (
-                  <LinkCard 
-                    key={link.id} 
-                    link={link} 
-                    onToggleFavorite={handleToggleFavorite}
-                  />
-                ))}
+        {/* Content Area */}
+        <div className="flex-1 overflow-y-auto p-6 sm:p-12 flex flex-col items-center justify-center">
+          <div className="max-w-7xl w-full">
+            
+            {(!activeCategory && !isSearching) ? (
+              // SELECTION SCREEN - COMPACT (Only if not searching)
+              <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 text-center">
+                <div className="mb-10">
+                  <h2 className="text-3xl font-black text-slate-900 tracking-tighter uppercase mb-1">Central Azul</h2>
+                  <p className="text-slate-400 text-[10px] font-bold uppercase tracking-[0.3em]">Escolha um departamento</p>
+                </div>
+                
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 max-w-4xl mx-auto">
+                  {DEFAULT_CATEGORIES.map((cat) => (
+                    <button
+                      key={cat.id}
+                      onClick={() => setActiveCategory(cat.id)}
+                      className="relative group aspect-square max-w-[180px] mx-auto w-full flex flex-col items-center justify-center bg-white rounded-[2.5rem] border border-slate-200 shadow-sm transition-all duration-300 hover:border-blue-300 hover:shadow-2xl hover:shadow-blue-500/10 overflow-hidden"
+                    >
+                      <div className={`absolute -right-2 -bottom-2 opacity-[0.03] transition-transform duration-500 group-hover:scale-125 ${cat.color}`}>
+                        <i className={`fa-solid ${cat.icon} text-6xl`}></i>
+                      </div>
+                      
+                      <div className={`w-14 h-14 rounded-2xl mb-3 flex items-center justify-center text-xl shadow-lg transition-transform duration-300 group-hover:scale-110 group-hover:-translate-y-1 ${
+                        cat.id === 'dia_a_dia' ? 'bg-blue-50 text-blue-600' : 
+                        cat.id === 'treinamento' ? 'bg-emerald-50 text-emerald-600' :
+                        cat.id === 'passe_livre' ? 'bg-purple-50 text-purple-600' : 'bg-amber-50 text-amber-600'
+                      }`}>
+                        <i className={`fa-solid ${cat.icon}`}></i>
+                      </div>
+                      
+                      <h3 className="text-xs font-black text-slate-800 uppercase tracking-tighter">{cat.name}</h3>
+                    </button>
+                  ))}
+                </div>
               </div>
             ) : (
-              <div className="flex flex-col items-center justify-center py-24 text-center">
-                <div className="w-24 h-24 bg-slate-100 rounded-full flex items-center justify-center text-slate-300 mb-6 shadow-inner">
-                  <i className="fa-solid fa-folder-open text-4xl"></i>
+              // LINK LIST VIEW (Category or Global Search)
+              <div className="animate-in fade-in slide-in-from-right-4 duration-500 h-full">
+                <div className="flex items-center justify-between mb-12">
+                  <div className="flex items-center space-x-2">
+                     <div className={`w-2 h-8 rounded-full bg-gradient-to-b ${
+                        isSearching ? 'from-slate-400 to-slate-600' :
+                        currentCategory?.id === 'dia_a_dia' ? 'from-blue-400 to-blue-600' : 
+                        currentCategory?.id === 'treinamento' ? 'from-emerald-400 to-emerald-600' :
+                        currentCategory?.id === 'passe_livre' ? 'from-purple-400 to-purple-600' : 'from-amber-400 to-amber-600'
+                     }`}></div>
+                     <h2 className="text-4xl font-black text-slate-900 tracking-tighter uppercase">
+                       {isSearching ? 'Resultados da Busca' : currentCategory?.name}
+                     </h2>
+                  </div>
                 </div>
-                <h3 className="text-xl font-bold text-slate-800 mb-2">Nada por aqui ainda</h3>
-                <p className="text-slate-500 max-w-sm">
-                  {searchQuery 
-                    ? `Não encontramos resultados para "${searchQuery}"` 
-                    : "Os links importantes aparecerão aqui conforme forem adicionados."}
-                </p>
+
+                {displayLinks.length > 0 ? (
+                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-x-4 gap-y-6">
+                    {displayLinks.map((link) => (
+                      <LinkButton 
+                        key={link.id} 
+                        link={link} 
+                      />
+                    ))}
+                  </div>
+                ) : (
+                  <div className="flex flex-col items-center justify-center py-20 text-center bg-white rounded-[2.5rem] border-2 border-dashed border-slate-200 w-full">
+                    <div className="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center text-slate-300 mb-6">
+                      <i className="fa-solid fa-magnifying-glass text-3xl"></i>
+                    </div>
+                    <h3 className="text-xl font-black text-slate-800 mb-2 uppercase tracking-tighter">
+                        {isSearching ? 'Nenhum Resultado' : 'Vazio'}
+                    </h3>
+                    <p className="text-slate-400 max-w-xs text-[11px] font-bold uppercase tracking-wider">
+                      {isSearching 
+                        ? `Não encontramos nada para "${searchQuery}".` 
+                        : "Nenhum link nesta categoria ainda."}
+                    </p>
+                  </div>
+                )}
               </div>
             )}
           </div>
         </div>
       </main>
 
-      {/* Modal only accessible via manual state change or hidden dev trigger if needed */}
       {isModalOpen && (
         <AddLinkModal 
           onClose={() => setIsModalOpen(false)} 

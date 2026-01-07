@@ -2,34 +2,174 @@
 import { Category } from './types';
 
 export const DEFAULT_CATEGORIES: Category[] = [
-  { id: 'all', name: 'Todos', icon: 'fa-layer-group', color: 'text-slate-600' },
-  { id: 'favorites', name: 'Favoritos', icon: 'fa-star', color: 'text-amber-500' },
   { id: 'dia_a_dia', name: 'Dia a Dia', icon: 'fa-calendar-check', color: 'text-blue-500' },
   { id: 'treinamento', name: 'Treinamento', icon: 'fa-graduation-cap', color: 'text-emerald-500' },
-  { id: 'passe_livre', name: 'Passe Livre', icon: 'fa-id-card', color: 'text-purple-500' },
-  { id: 'consultas', name: 'Consultas', icon: 'fa-clipboard-question', color: 'text-amber-500' },
-  { id: 'other', name: 'Outros', icon: 'fa-ellipsis', color: 'text-slate-400' }
+  { id: 'passe_livre', name: 'Viagem', icon: 'fa-plane', color: 'text-purple-500' },
+  { id: 'consultas', name: 'Consultas', icon: 'fa-clipboard-question', color: 'text-amber-500' }
 ];
 
 export const INITIAL_LINKS = [
+  // --- DIA A DIA ---
   {
-    id: '1',
-    url: 'https://docs.google.com',
-    title: 'Planilhas de Controle',
+    id: 'isa-azul',
+    url: 'https://isa.voeazul.com.br/login/#/azul',
+    title: 'ISA',
     category: 'dia_a_dia',
-    description: 'Acesso rápido às planilhas diárias de operação.',
-    tags: ['rotina', 'google'],
+    description: 'Sistema ISA Azul.',
+    tags: ['azul', 'sistema'],
     createdAt: Date.now(),
-    isFavorite: true
+    isFavorite: false
   },
   {
-    id: '2',
-    url: 'https://learning.portal.com',
-    title: 'Portal de Treinamento',
-    category: 'treinamento',
-    description: 'Cursos e certificações obrigatórias da empresa.',
-    tags: ['capacitação', 'rh'],
-    createdAt: Date.now() - 86400000,
+    id: 'webmail-azul',
+    url: 'https://outlook.office.com/mail/inbox',
+    title: 'WEBMAIL',
+    category: 'dia_a_dia',
+    description: 'Acesso ao Outlook Webmail.',
+    tags: ['email', 'office'],
+    createdAt: Date.now() - 100,
+    isFavorite: false
+  },
+  {
+    id: 'escala-sabre',
+    url: 'http://cae.voeazul.com.br/',
+    title: 'ESCALA SABRE',
+    category: 'dia_a_dia',
+    description: 'Consulta de escala Sabre.',
+    tags: ['escala', 'sabre'],
+    createdAt: Date.now() - 200,
+    isFavorite: false
+  },
+  {
+    id: 'bid-azul',
+    url: 'http://crew.azu.jepphost.com/site/',
+    title: 'BID',
+    category: 'dia_a_dia',
+    description: 'Sistema BID Crew.',
+    tags: ['tripulante', 'escala'],
+    createdAt: Date.now() - 300,
+    isFavorite: false
+  },
+  {
+    id: 'portal-rh',
+    url: 'https://portalrh.voeazul.com.br/portalrh/',
+    title: 'PORTAL RH',
+    category: 'dia_a_dia',
+    description: 'Portal do colaborador e RH.',
+    tags: ['rh', 'colaborador'],
+    createdAt: Date.now() - 400,
+    isFavorite: false
+  },
+  {
+    id: 'uniformes-azul',
+    url: 'https://sistemas.voeazul.com.br/azuluniformes/',
+    title: 'UNIFORMES',
+    category: 'dia_a_dia',
+    description: 'Sistema de pedidos de uniformes.',
+    tags: ['logística', 'vestuário'],
+    createdAt: Date.now() - 500,
+    isFavorite: false
+  },
+  {
+    id: 'service-now',
+    url: 'https://voeazul.service-now.com/',
+    title: 'PORTAL DE SERVIÇOS - SERVICE NOW',
+    category: 'dia_a_dia',
+    description: 'Portal de chamados e serviços TI.',
+    tags: ['suporte', 'ti'],
+    createdAt: Date.now() - 600,
+    isFavorite: false
+  },
+  {
+    id: 'vistair-docunet',
+    url: 'https://login-br.vistair.com/login?service=https%3A%2F%2Fdocunet-online-br.vistair.com%2Fj_spring_cas_security_check',
+    title: 'VISTAIR - DOCUNET',
+    category: 'dia_a_dia',
+    description: 'Documentação técnica e manuais.',
+    tags: ['docs', 'técnico'],
+    createdAt: Date.now() - 700,
+    isFavorite: false
+  },
+  {
+    id: 'aqd-azul',
+    url: 'https://aqdweb.voeazul.com.br/AQDWeb/home.aspx',
+    title: 'AQD',
+    category: 'dia_a_dia',
+    description: 'Sistema de qualidade e segurança.',
+    tags: ['qualidade', 'segurança'],
+    createdAt: Date.now() - 800,
+    isFavorite: false
+  },
+  {
+    id: 'assinatura-email',
+    url: 'https://voeazul.sharepoint.com/sites/intranet/SitePages/AssinaturaEmail.aspx?',
+    title: 'GERADOR DE ASSINATURA DE E-MAIL PADRÃO',
+    category: 'dia_a_dia',
+    description: 'Padronização de assinaturas de e-mail.',
+    tags: ['comunicação', 'padronização'],
+    createdAt: Date.now() - 900,
+    isFavorite: false
+  },
+  {
+    id: 'standardscast-spotify',
+    url: 'https://open.spotify.com/',
+    title: 'STANDARDSCAST - SPOTIFY',
+    category: 'dia_a_dia',
+    description: 'Acesso ao Spotify (StandardsCast).',
+    tags: ['áudio', 'podcast'],
+    createdAt: Date.now() - 1000,
+    isFavorite: false
+  },
+
+  // --- VIAGEM ---
+  {
+    id: 'gol-pl',
+    url: 'https://passelivre.voegol.com.br/',
+    title: 'GOL',
+    category: 'passe_livre',
+    description: 'Portal de Passe Livre da GOL.',
+    tags: ['viagem', 'companhia'],
+    createdAt: Date.now() - 1100,
+    isFavorite: false
+  },
+  {
+    id: 'azul-pl',
+    url: 'https://passelivre.voeazul.com.br/login',
+    title: 'AZUL',
+    category: 'passe_livre',
+    description: 'Portal de Passe Livre da Azul.',
+    tags: ['viagem', 'companhia'],
+    createdAt: Date.now() - 1200,
+    isFavorite: false
+  },
+  {
+    id: 'latam-pl',
+    url: 'https://passelivre.appslatam.com/#/',
+    title: 'LATAM',
+    category: 'passe_livre',
+    description: 'Portal de Passe Livre da LATAM.',
+    tags: ['viagem', 'companhia'],
+    createdAt: Date.now() - 1300,
+    isFavorite: false
+  },
+  {
+    id: 'concessao-pg',
+    url: 'https://concessaopassagens.voeazul.com.br/ConcessaoPassagensWeb/Login',
+    title: 'CONCESSÃO de PASSAGENS',
+    category: 'passe_livre',
+    description: 'Sistema de concessão de passagens Azul.',
+    tags: ['benefício', 'azul'],
+    createdAt: Date.now() - 1400,
+    isFavorite: false
+  },
+  {
+    id: 'consulta-voos',
+    url: 'https://concessao-consulteseuvoo.voeazul.com.br/',
+    title: 'CONSULTA VOOS AZUL',
+    category: 'passe_livre',
+    description: 'Painel para consulta de voos da Azul.',
+    tags: ['vôos', 'azul'],
+    createdAt: Date.now() - 1500,
     isFavorite: false
   }
 ];
