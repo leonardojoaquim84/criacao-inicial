@@ -1,10 +1,10 @@
 
 import React, { useState, useEffect, useMemo } from 'react';
-import Sidebar from './components/Sidebar';
-import LinkButton from './components/LinkButton';
-import AddLinkModal from './components/AddLinkModal';
-import { LinkItem, Category } from './types';
-import { INITIAL_LINKS, DEFAULT_CATEGORIES } from './constants';
+import Sidebar from './components/Sidebar.tsx';
+import LinkButton from './components/LinkButton.tsx';
+import AddLinkModal from './components/AddLinkModal.tsx';
+import { LinkItem } from './types.ts';
+import { INITIAL_LINKS, DEFAULT_CATEGORIES } from './constants.ts';
 
 const App: React.FC = () => {
   const [links, setLinks] = useState<LinkItem[]>([]);
@@ -13,7 +13,6 @@ const App: React.FC = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // Initialize data
   useEffect(() => {
     const saved = localStorage.getItem('workflow_links');
     if (saved) {
@@ -23,12 +22,10 @@ const App: React.FC = () => {
     }
   }, []);
 
-  // Sync to local storage
   useEffect(() => {
     localStorage.setItem('workflow_links', JSON.stringify(links));
   }, [links]);
 
-  // Global search or category filtering
   const displayLinks = useMemo(() => {
     const query = searchQuery.toLowerCase().trim();
     
@@ -38,21 +35,10 @@ const App: React.FC = () => {
                            link.url.toLowerCase().includes(query) ||
                            link.tags.some(t => t.toLowerCase().includes(query));
       
-      // If there's a search query, we ignore the category restriction (Global Search)
       if (query) return matchesSearch;
-      
-      // If no query, we filter by category
       return activeCategory ? link.category === activeCategory : false;
     }).sort((a, b) => b.createdAt - a.createdAt);
   }, [links, activeCategory, searchQuery]);
-
-  const handleAddLink = (linkData: Partial<LinkItem>) => {
-    const newLink: LinkItem = {
-      id: crypto.randomUUID(),
-      ...linkData
-    } as LinkItem;
-    setLinks(prev => [newLink, ...prev]);
-  };
 
   const currentCategory = useMemo(() => {
     return DEFAULT_CATEGORIES.find(c => c.id === activeCategory);
@@ -62,7 +48,6 @@ const App: React.FC = () => {
 
   return (
     <div className="flex h-screen bg-slate-50 overflow-hidden text-slate-900 font-inter">
-      {/* Mobile Sidebar Overlay */}
       {isSidebarOpen && (
         <div 
           className="fixed inset-0 bg-slate-900/20 backdrop-blur-sm z-40 lg:hidden"
@@ -75,7 +60,7 @@ const App: React.FC = () => {
         onSelectCategory={(id) => {
           setActiveCategory(id);
           setIsSidebarOpen(false);
-          setSearchQuery(''); // Limpa a busca ao selecionar categoria para focar no departamento
+          setSearchQuery('');
         }}
         onGoHome={() => {
           setActiveCategory(null);
@@ -85,7 +70,6 @@ const App: React.FC = () => {
       />
 
       <main className="flex-1 flex flex-col min-w-0 overflow-hidden">
-        {/* Header */}
         <header className="bg-white border-b border-slate-200 sticky top-0 z-30">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-6">
             <button 
@@ -125,13 +109,11 @@ const App: React.FC = () => {
           </div>
         </header>
 
-        {/* Content Area */}
         <div className="flex-1 overflow-y-auto p-6 sm:p-12 flex flex-col items-center justify-center">
           <div className="max-w-7xl w-full">
             
             {(!activeCategory && !isSearching) ? (
-              // SELECTION SCREEN - COMPACT (Only if not searching)
-              <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 text-center">
+              <div className="animate-in fade-in text-center">
                 <div className="mb-10">
                   <h2 className="text-3xl font-black text-slate-900 tracking-tighter uppercase mb-1">Central Azul</h2>
                   <p className="text-slate-400 text-[10px] font-bold uppercase tracking-[0.3em]">Escolha um departamento</p>
@@ -147,7 +129,6 @@ const App: React.FC = () => {
                       <div className={`absolute -right-2 -bottom-2 opacity-[0.03] transition-transform duration-500 group-hover:scale-125 ${cat.color}`}>
                         <i className={`fa-solid ${cat.icon} text-6xl`}></i>
                       </div>
-                      
                       <div className={`w-14 h-14 rounded-2xl mb-3 flex items-center justify-center text-xl shadow-lg transition-transform duration-300 group-hover:scale-110 group-hover:-translate-y-1 ${
                         cat.id === 'dia_a_dia' ? 'bg-blue-50 text-blue-600' : 
                         cat.id === 'treinamento' ? 'bg-emerald-50 text-emerald-600' :
@@ -155,15 +136,13 @@ const App: React.FC = () => {
                       }`}>
                         <i className={`fa-solid ${cat.icon}`}></i>
                       </div>
-                      
                       <h3 className="text-xs font-black text-slate-800 uppercase tracking-tighter">{cat.name}</h3>
                     </button>
                   ))}
                 </div>
               </div>
             ) : (
-              // LINK LIST VIEW (Category or Global Search)
-              <div className="animate-in fade-in slide-in-from-right-4 duration-500 h-full">
+              <div className="animate-in fade-in h-full">
                 <div className="flex items-center justify-between mb-12">
                   <div className="flex items-center space-x-2">
                      <div className={`w-2 h-8 rounded-full bg-gradient-to-b ${
@@ -211,7 +190,7 @@ const App: React.FC = () => {
       {isModalOpen && (
         <AddLinkModal 
           onClose={() => setIsModalOpen(false)} 
-          onAdd={handleAddLink}
+          onAdd={(linkData) => setLinks(prev => [{ id: crypto.randomUUID(), ...linkData }, ...prev])}
         />
       )}
     </div>
