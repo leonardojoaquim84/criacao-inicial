@@ -59,7 +59,7 @@ const AddLinkModal: React.FC<AddLinkModalProps> = ({ onClose, onAdd }) => {
                   type="url"
                   required
                   placeholder="https://sua-ferramenta.com"
-                  className="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all"
+                  className="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
                   value={url}
                   onChange={(e) => setUrl(e.target.value)}
                   disabled={status === AppStatus.LOADING}
@@ -69,11 +69,11 @@ const AddLinkModal: React.FC<AddLinkModalProps> = ({ onClose, onAdd }) => {
 
             {error && <p className="text-rose-500 text-sm font-medium">{error}</p>}
 
-            <div className="bg-indigo-50 p-4 rounded-2xl flex items-start space-x-3">
-              <div className="w-8 h-8 bg-indigo-100 rounded-lg flex items-center justify-center text-indigo-600 flex-shrink-0">
+            <div className="bg-blue-50 p-4 rounded-2xl flex items-start space-x-3">
+              <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center text-blue-600 flex-shrink-0">
                 <i className="fa-solid fa-wand-magic-sparkles"></i>
               </div>
-              <p className="text-xs text-indigo-700 leading-relaxed font-medium">
+              <p className="text-xs text-blue-700 leading-relaxed font-medium">
                 Nossa IA irá detectar automaticamente o título, categoria e descrição para manter sua biblioteca organizada.
               </p>
             </div>
@@ -83,8 +83,8 @@ const AddLinkModal: React.FC<AddLinkModalProps> = ({ onClose, onAdd }) => {
               disabled={status === AppStatus.LOADING}
               className={`w-full py-4 rounded-2xl font-bold text-white transition-all shadow-lg flex items-center justify-center ${
                 status === AppStatus.LOADING 
-                  ? 'bg-indigo-400 cursor-not-allowed' 
-                  : 'bg-indigo-600 hover:bg-indigo-700 shadow-indigo-200'
+                  ? 'bg-blue-400 cursor-not-allowed' 
+                  : 'bg-blue-600 hover:bg-blue-700 shadow-blue-200'
               }`}
             >
               {status === AppStatus.LOADING ? (

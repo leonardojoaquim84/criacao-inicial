@@ -15,7 +15,14 @@ export const analyzeLink = async (url: string, title?: string): Promise<Analysis
   
   const prompt = `Analise este link de trabalho: URL: ${url} ${title ? `(Título sugerido: ${title})` : ''}. 
   Forneça uma categorização profissional e uma breve descrição em português. 
-  Escolha a categoria mais adequada entre: docs, tools, meeting, learning, other.`;
+  Escolha a categoria mais adequada EXCLUSIVAMENTE entre: dia_a_dia, treinamento, passe_livre, consultas, other.
+  
+  Significado das categorias:
+  - dia_a_dia: Ferramentas de uso diário, e-mail, planilhas de rotina.
+  - treinamento: Materiais de estudo, cursos, manuais, onboarding.
+  - passe_livre: Acessos gerais, portais de benefícios, holerites.
+  - consultas: Dashboards, relatórios, busca de dados, sistemas de consulta.
+  - other: Outros links que não se encaixam acima.`;
 
   try {
     const response = await ai.models.generateContent({
@@ -27,7 +34,7 @@ export const analyzeLink = async (url: string, title?: string): Promise<Analysis
           type: Type.OBJECT,
           properties: {
             title: { type: Type.STRING, description: 'Um título conciso e profissional.' },
-            category: { type: Type.STRING, description: 'Uma das categorias: docs, tools, meeting, learning, other.' },
+            category: { type: Type.STRING, description: 'Uma das categorias: dia_a_dia, treinamento, passe_livre, consultas, other.' },
             description: { type: Type.STRING, description: 'Uma breve frase sobre o que é o link.' },
             tags: { 
               type: Type.ARRAY, 
