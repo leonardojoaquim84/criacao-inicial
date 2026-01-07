@@ -12,6 +12,8 @@ const App: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentTime, setCurrentTime] = useState(new Date());
+  const [visitorCount, setVisitorCount] = useState<number>(0);
 
   useEffect(() => {
     const saved = localStorage.getItem('workflow_links');
@@ -20,6 +22,19 @@ const App: React.FC = () => {
     } else {
       setLinks(INITIAL_LINKS as LinkItem[]);
     }
+
+    // Lógica de contador de visitantes
+    const storedCount = localStorage.getItem('visitor_count');
+    const newCount = (storedCount ? parseInt(storedCount, 10) : 0) + 1;
+    localStorage.setItem('visitor_count', newCount.toString());
+    setVisitorCount(newCount);
+
+    // Timer para atualizar data/hora
+    const timer = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 1000);
+
+    return () => clearInterval(timer);
   }, []);
 
   useEffect(() => {
@@ -45,6 +60,19 @@ const App: React.FC = () => {
   }, [activeCategory]);
 
   const isSearching = searchQuery.trim().length > 0;
+
+  const formattedDateTime = useMemo(() => {
+    const date = currentTime.toLocaleDateString('pt-BR', {
+      day: '2-digit',
+      month: 'long',
+      year: 'numeric'
+    });
+    const time = currentTime.toLocaleTimeString('pt-BR', {
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+    return `${date} • ${time}`;
+  }, [currentTime]);
 
   return (
     <div className="flex h-screen bg-slate-50 overflow-hidden text-slate-900 font-inter">
@@ -109,14 +137,14 @@ const App: React.FC = () => {
           </div>
         </header>
 
-        <div className="flex-1 overflow-y-auto p-6 sm:p-12 flex flex-col items-center justify-center">
+        <div className="flex-1 overflow-y-auto p-6 sm:p-12 pt-8 sm:pt-14 flex flex-col items-center justify-start">
           <div className="max-w-7xl w-full">
             
             {(!activeCategory && !isSearching) ? (
               <div className="animate-in fade-in text-center">
                 <div className="mb-10">
-                  <h2 className="text-3xl font-black text-slate-900 tracking-tighter uppercase mb-1">Central Azul</h2>
-                  <p className="text-slate-400 text-[10px] font-bold uppercase tracking-[0.3em]">Escolha um departamento</p>
+                  <h2 className="text-3xl font-black text-slate-900 tracking-tighter uppercase mb-1">Painel Azul</h2>
+                  <p className="text-slate-400 text-[10px] font-bold uppercase tracking-[0.3em]">{formattedDateTime}</p>
                 </div>
                 
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 max-w-4xl mx-auto">
@@ -139,6 +167,13 @@ const App: React.FC = () => {
                       <h3 className="text-xs font-black text-slate-800 uppercase tracking-tighter">{cat.name}</h3>
                     </button>
                   ))}
+                </div>
+
+                {/* Visitor Counter */}
+                <div className="mt-20 opacity-30 select-none">
+                  <p className="text-[9px] font-bold text-slate-400 uppercase tracking-[0.4em]">
+                    Visitante nº {visitorCount}
+                  </p>
                 </div>
               </div>
             ) : (
