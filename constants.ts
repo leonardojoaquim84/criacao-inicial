@@ -121,6 +121,48 @@ export const INITIAL_LINKS = [
     isFavorite: false
   },
 
+  // --- TREINAMENTO ---
+  {
+    id: 'mint-treinamento',
+    url: 'https://azul.mint-online.com/azul/',
+    title: 'MINT',
+    category: 'treinamento',
+    description: 'Sistema de gestão de treinamento MINT.',
+    tags: ['treinamento', 'gestão', 'azul'],
+    createdAt: Date.now() - 1010,
+    isFavorite: false
+  },
+  {
+    id: 'portal-piloto',
+    url: 'https://voeazul.sharepoint.com/sites/PortaldeInstrutores-Pilotos/SitePages/Portal-do-aluno--Aviador.aspx?ga=1',
+    title: 'PORTAL DO PILOTO',
+    category: 'treinamento',
+    description: 'Portal do aluno e instrutor aviador.',
+    tags: ['piloto', 'treinamento', 'instrução'],
+    createdAt: Date.now() - 1020,
+    isFavorite: false
+  },
+  {
+    id: 'ead-uniazul',
+    url: 'https://portaluniazul.voeazul.com.br/',
+    title: 'EAD - PORTAL UNIAZUL',
+    category: 'treinamento',
+    description: 'Portal de ensino a distância Uniazul.',
+    tags: ['ead', 'uniazul', 'cursos'],
+    createdAt: Date.now() - 1030,
+    isFavorite: false
+  },
+  {
+    id: 'area-aluno-gto',
+    url: 'https://voeazul.sharepoint.com/sites/gto-ged/Material%20de%20Treinamento/Forms/AllItems.aspx?id=%2Fsites%2Fgto%2Dged%2FMaterial%20de%20Treinamento%2FA320&viewid=f0ea0fc6%2D85db%2D475b%2Da5c0%2D809a4a16a18b',
+    title: 'AREA DO ALUNO',
+    category: 'treinamento',
+    description: 'Material de treinamento GTO/GED.',
+    tags: ['material', 'estudo', 'a320'],
+    createdAt: Date.now() - 1040,
+    isFavorite: false
+  },
+
   // --- VIAGEM ---
   {
     id: 'gol-pl',
@@ -170,6 +212,28 @@ export const INITIAL_LINKS = [
     description: 'Painel para consulta de voos da Azul.',
     tags: ['vôos', 'azul'],
     createdAt: Date.now() - 1500,
+    isFavorite: false
+  },
+
+  // --- CONSULTAS ---
+  {
+    id: 'consulta-base-contratual',
+    url: 'https://voeazul.service-now.com/sp?id=consulta_de_posicao_transferencia_base',
+    title: 'CONSULTA BASE CONTRATUAL',
+    category: 'consultas',
+    description: 'Consulta de posição e transferência de base no Service Now.',
+    tags: ['base', 'contratual', 'transferência'],
+    createdAt: Date.now() - 2000,
+    isFavorite: false
+  },
+  {
+    id: 'consulta-base-virtual',
+    url: 'https://voeazul.service-now.com/sp?id=consulta_posicao_base_virtual_escala',
+    title: 'CONSULTA BASE VIRTUAL',
+    category: 'consultas',
+    description: 'Consulta de posição em base virtual de escala no Service Now.',
+    tags: ['base', 'virtual', 'escala'],
+    createdAt: Date.now() - 2100,
     isFavorite: false
   }
 ];
