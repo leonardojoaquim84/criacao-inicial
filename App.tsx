@@ -1,4 +1,5 @@
 
+import { GoogleGenAI } from "@google/genai";
 import React, { useState, useEffect, useMemo } from 'react';
 import Sidebar from './components/Sidebar.tsx';
 import LinkButton from './components/LinkButton.tsx';
@@ -74,6 +75,12 @@ const App: React.FC = () => {
     return `${date} • ${time}`;
   }, [currentTime]);
 
+  const handleGoHome = () => {
+    setActiveCategory(null);
+    setSearchQuery('');
+    setIsSidebarOpen(false);
+  };
+
   return (
     <div className="flex h-screen bg-slate-50 overflow-hidden text-slate-900 font-inter">
       {isSidebarOpen && (
@@ -90,10 +97,7 @@ const App: React.FC = () => {
           setIsSidebarOpen(false);
           setSearchQuery('');
         }}
-        onGoHome={() => {
-          setActiveCategory(null);
-          setSearchQuery('');
-        }}
+        onGoHome={handleGoHome}
         isOpen={isSidebarOpen}
       />
 
@@ -124,20 +128,17 @@ const App: React.FC = () => {
 
             <div className="flex items-center space-x-3 select-none">
               <button 
-                onClick={() => {
-                    setActiveCategory(null);
-                    setSearchQuery('');
-                }}
-                className="hidden sm:flex items-center space-x-2 bg-blue-600 px-5 py-2.5 rounded-xl shadow-lg shadow-blue-100 hover:bg-blue-700 transition-all transform hover:-translate-y-0.5 active:translate-y-0"
+                onClick={handleGoHome}
+                className="hidden sm:flex items-center space-x-2 bg-slate-100 px-4 py-2 rounded-xl border border-slate-200 text-slate-500 hover:bg-white hover:text-blue-600 hover:border-blue-200 transition-all active:scale-95"
               >
-                 <i className="fa-solid fa-house text-white text-xs"></i>
-                 <span className="text-white font-black text-xs tracking-widest uppercase">Início</span>
+                 <i className="fa-solid fa-house text-xs"></i>
+                 <span className="font-black text-[10px] tracking-widest uppercase">Início</span>
               </button>
             </div>
           </div>
         </header>
 
-        <div className="flex-1 overflow-y-auto p-6 sm:p-12 pt-8 sm:pt-14 flex flex-col items-center justify-start">
+        <div className="flex-1 overflow-y-auto p-6 sm:p-10 lg:p-14 flex flex-col items-center justify-start">
           <div className="max-w-7xl w-full">
             
             {(!activeCategory && !isSearching) ? (
@@ -169,7 +170,6 @@ const App: React.FC = () => {
                   ))}
                 </div>
 
-                {/* Visitor Counter */}
                 <div className="mt-20 opacity-30 select-none">
                   <p className="text-[9px] font-bold text-slate-400 uppercase tracking-[0.4em]">
                     Visitante nº {visitorCount}
@@ -177,19 +177,28 @@ const App: React.FC = () => {
                 </div>
               </div>
             ) : (
-              <div className="animate-in fade-in h-full">
-                <div className="flex items-center justify-between mb-12">
-                  <div className="flex items-center space-x-2">
+              <div className="animate-in fade-in h-full relative">
+                {/* Header da Página com Botão à Direita */}
+                <div className="flex items-center justify-between mb-8 pb-4 border-b border-slate-100">
+                  <div className="flex items-center space-x-3">
                      <div className={`w-2 h-8 rounded-full bg-gradient-to-b ${
                         isSearching ? 'from-slate-400 to-slate-600' :
                         currentCategory?.id === 'dia_a_dia' ? 'from-blue-400 to-blue-600' : 
                         currentCategory?.id === 'treinamento' ? 'from-emerald-400 to-emerald-600' :
                         currentCategory?.id === 'passe_livre' ? 'from-purple-400 to-purple-600' : 'from-amber-400 to-amber-600'
                      }`}></div>
-                     <h2 className="text-4xl font-black text-slate-900 tracking-tighter uppercase">
-                       {isSearching ? 'Resultados da Busca' : currentCategory?.name}
+                     <h2 className="text-3xl font-black text-slate-900 tracking-tighter uppercase leading-none">
+                       {isSearching ? 'Busca' : currentCategory?.name}
                      </h2>
                   </div>
+
+                  <button 
+                    onClick={handleGoHome}
+                    className="group flex items-center space-x-2 px-4 py-2 bg-transparent text-slate-400 hover:text-blue-600 transition-all text-[10px] font-black uppercase tracking-[0.2em]"
+                  >
+                    <i className="fa-solid fa-chevron-left text-[8px] group-hover:-translate-x-1 transition-transform"></i>
+                    <span>Voltar ao Início</span>
+                  </button>
                 </div>
 
                 {displayLinks.length > 0 ? (

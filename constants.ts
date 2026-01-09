@@ -219,7 +219,7 @@ export const INITIAL_LINKS = [
   {
     id: 'consulta-base-contratual',
     url: 'https://voeazul.service-now.com/sp?id=consulta_de_posicao_transferencia_base',
-    title: 'CONSULTA BASE CONTRATUAL',
+    title: 'BASE CONTRATUAL',
     category: 'consultas',
     description: 'Consulta de posição e transferência de base no Service Now.',
     tags: ['base', 'contratual', 'transferência'],
@@ -229,7 +229,7 @@ export const INITIAL_LINKS = [
   {
     id: 'consulta-base-virtual',
     url: 'https://voeazul.service-now.com/sp?id=consulta_posicao_base_virtual_escala',
-    title: 'CONSULTA BASE VIRTUAL',
+    title: 'BASE VIRTUAL',
     category: 'consultas',
     description: 'Consulta de posição em base virtual de escala no Service Now.',
     tags: ['base', 'virtual', 'escala'],
