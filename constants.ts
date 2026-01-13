@@ -235,5 +235,15 @@ export const INITIAL_LINKS = [
     tags: ['base', 'virtual', 'escala'],
     createdAt: Date.now() - 2100,
     isFavorite: false
+  },
+  {
+    id: 'previsao-ferias',
+    url: 'https://voeazul.service-now.com/sp?id=consulta_de_ferias',
+    title: 'PREVISÃO DE FÉRIAS',
+    category: 'consultas',
+    description: 'Consulta de previsão de férias no Service Now.',
+    tags: ['férias', 'rh', 'escala'],
+    createdAt: Date.now() - 2200,
+    isFavorite: false
   }
 ];
