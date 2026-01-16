@@ -156,7 +156,7 @@ const App: React.FC = () => {
                       <div className={`absolute -right-2 -bottom-2 opacity-[0.03] transition-transform duration-500 group-hover:scale-125 ${cat.color}`}>
                         <i className={`fa-solid ${cat.icon} text-6xl`}></i>
                       </div>
-                      <div className={`w-12 h-12 rounded-2xl mb-4 flex items-center justify-center text-xl shadow-lg transition-transform duration-300 group-hover:scale-110 group-hover:-translate-y-1 ${
+                      <div className={`w-14 h-14 rounded-2xl mb-4 flex items-center justify-center text-2xl shadow-lg transition-transform duration-300 group-hover:scale-110 group-hover:-translate-y-1 ${
                         cat.id === 'dia_a_dia' ? 'bg-blue-50 text-blue-600' : 
                         cat.id === 'treinamento' ? 'bg-emerald-50 text-emerald-600' :
                         cat.id === 'passe_livre' ? 'bg-purple-50 text-purple-600' : 'bg-amber-50 text-amber-600'
@@ -199,7 +199,8 @@ const App: React.FC = () => {
                 </div>
 
                 {displayLinks.length > 0 ? (
-                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-x-4 gap-y-6">
+                  /* Grid ajustado: no máximo 4 colunas em telas grandes para garantir largura suficiente para títulos longos */
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-8 max-w-6xl mx-auto">
                     {displayLinks.map((link) => (
                       <LinkButton 
                         key={link.id} 

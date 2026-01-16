@@ -27,23 +27,29 @@ const LinkButton: React.FC<LinkButtonProps> = ({ link }) => {
         href={link.url}
         target="_blank"
         rel="noopener noreferrer"
-        className="relative flex items-center h-full w-full px-3 py-4 bg-white border border-slate-200 rounded-xl 
+        className="relative flex items-center w-full min-h-[72px] px-4 py-4 bg-white border border-slate-200 rounded-xl 
                    transform transition-all duration-300 ease-out
                    group-hover:-translate-y-1.5 group-hover:scale-[1.02] group-active:translate-y-0.5 group-active:scale-100
                    hover:border-blue-300 hover:bg-gradient-to-b hover:from-white hover:to-blue-50/50
                    shadow-sm hover:shadow-md hover:shadow-blue-200/50"
       >
-        <div className="flex items-center w-full gap-2.5">
-          {domain && (
-            <img 
-              src={`https://www.google.com/s2/favicons?sz=32&domain=${domain}`}
-              alt=""
-              className="w-4 h-4 shrink-0 opacity-60 group-hover:opacity-100 transition-opacity"
-              onError={(e) => (e.currentTarget.style.display = 'none')}
-            />
-          )}
-          <h3 className="font-extrabold text-slate-600 text-[10px] sm:text-[11px] 
-                         group-hover:text-blue-700 transition-colors uppercase tracking-wider leading-tight text-left break-words">
+        <div className="flex items-center w-full gap-3">
+          {/* Padronização do container do ícone */}
+          <div className="w-6 h-6 shrink-0 flex items-center justify-center bg-slate-50 rounded-md border border-slate-100 group-hover:border-blue-200 transition-colors">
+            {domain ? (
+              <img 
+                src={`https://www.google.com/s2/favicons?sz=32&domain=${domain}`}
+                alt=""
+                className="w-4 h-4 object-contain opacity-70 group-hover:opacity-100 transition-opacity"
+                onError={(e) => (e.currentTarget.style.display = 'none')}
+              />
+            ) : (
+              <i className="fa-solid fa-link text-[10px] text-slate-300"></i>
+            )}
+          </div>
+          
+          <h3 className="font-extrabold text-slate-600 text-[11px] sm:text-[12px] 
+                         group-hover:text-blue-700 transition-colors uppercase tracking-wider leading-snug text-left break-words">
             {link.title}
           </h3>
         </div>
