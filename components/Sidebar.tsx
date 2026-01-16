@@ -27,26 +27,26 @@ const Sidebar: React.FC<SidebarProps> = ({ activeCategory, onSelectCategory, onG
           </div>
         </button>
 
-        <nav className="flex-1 px-4 py-4 space-y-2">
+        <nav className="flex-1 px-3 py-4 space-y-2">
           <div className="px-4 py-2 text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] mb-2">Departamentos</div>
           {DEFAULT_CATEGORIES.map((cat) => (
             <button
               key={cat.id}
               onClick={() => onSelectCategory(cat.id)}
-              className={`w-full flex items-center px-4 py-3 rounded-xl transition-all duration-200 group ${
+              className={`w-full flex items-center px-3 py-3 rounded-xl transition-all duration-200 group ${
                 activeCategory === cat.id
                   ? 'bg-blue-50 text-blue-700 shadow-sm border border-blue-100'
                   : 'text-slate-600 hover:bg-slate-50 border border-transparent'
               }`}
             >
-              <span className={`w-8 h-8 flex items-center justify-center rounded-lg mr-3 shadow-inner ${
+              <span className={`w-7 h-7 flex items-center justify-center rounded-lg mr-3 shadow-inner shrink-0 ${
                 activeCategory === cat.id ? 'bg-white' : 'bg-slate-50 group-hover:bg-slate-100'
               }`}>
-                <i className={`fa-solid ${cat.icon} ${cat.color} text-xs`}></i>
+                <i className={`fa-solid ${cat.icon} ${cat.color} text-[10px]`}></i>
               </span>
-              <span className="font-bold text-xs uppercase tracking-wider">{cat.name}</span>
+              <span className="font-bold text-[11px] uppercase tracking-wider text-left leading-tight">{cat.name}</span>
               {activeCategory === cat.id && (
-                <div className="ml-auto w-1.5 h-1.5 rounded-full bg-blue-600 animate-pulse"></div>
+                <div className="ml-auto w-1.5 h-1.5 rounded-full bg-blue-600 animate-pulse shrink-0"></div>
               )}
             </button>
           ))}

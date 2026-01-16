@@ -24,13 +24,11 @@ const App: React.FC = () => {
       setLinks(INITIAL_LINKS as LinkItem[]);
     }
 
-    // Lógica de contador de visitantes
     const storedCount = localStorage.getItem('visitor_count');
     const newCount = (storedCount ? parseInt(storedCount, 10) : 0) + 1;
     localStorage.setItem('visitor_count', newCount.toString());
     setVisitorCount(newCount);
 
-    // Timer para atualizar data/hora
     const timer = setInterval(() => {
       setCurrentTime(new Date());
     }, 1000);
@@ -148,24 +146,24 @@ const App: React.FC = () => {
                   <p className="text-slate-400 text-[10px] font-bold uppercase tracking-[0.3em]">{formattedDateTime}</p>
                 </div>
                 
-                <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 max-w-4xl mx-auto">
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
                   {DEFAULT_CATEGORIES.map((cat) => (
                     <button
                       key={cat.id}
                       onClick={() => setActiveCategory(cat.id)}
-                      className="relative group aspect-square max-w-[180px] mx-auto w-full flex flex-col items-center justify-center bg-white rounded-[2.5rem] border border-slate-200 shadow-sm transition-all duration-300 hover:border-blue-300 hover:shadow-2xl hover:shadow-blue-500/10 overflow-hidden"
+                      className="relative group min-h-[160px] mx-auto w-full flex flex-col items-center justify-center bg-white rounded-[2.5rem] border border-slate-200 shadow-sm transition-all duration-300 hover:border-blue-300 hover:shadow-2xl hover:shadow-blue-500/10 overflow-hidden p-6"
                     >
                       <div className={`absolute -right-2 -bottom-2 opacity-[0.03] transition-transform duration-500 group-hover:scale-125 ${cat.color}`}>
                         <i className={`fa-solid ${cat.icon} text-6xl`}></i>
                       </div>
-                      <div className={`w-14 h-14 rounded-2xl mb-3 flex items-center justify-center text-xl shadow-lg transition-transform duration-300 group-hover:scale-110 group-hover:-translate-y-1 ${
+                      <div className={`w-12 h-12 rounded-2xl mb-4 flex items-center justify-center text-xl shadow-lg transition-transform duration-300 group-hover:scale-110 group-hover:-translate-y-1 ${
                         cat.id === 'dia_a_dia' ? 'bg-blue-50 text-blue-600' : 
                         cat.id === 'treinamento' ? 'bg-emerald-50 text-emerald-600' :
                         cat.id === 'passe_livre' ? 'bg-purple-50 text-purple-600' : 'bg-amber-50 text-amber-600'
                       }`}>
                         <i className={`fa-solid ${cat.icon}`}></i>
                       </div>
-                      <h3 className="text-xs font-black text-slate-800 uppercase tracking-tighter">{cat.name}</h3>
+                      <h3 className="text-xs font-black text-slate-800 uppercase tracking-widest">{cat.name}</h3>
                     </button>
                   ))}
                 </div>
@@ -178,7 +176,6 @@ const App: React.FC = () => {
               </div>
             ) : (
               <div className="animate-in fade-in h-full relative">
-                {/* Header da Página com Botão à Direita */}
                 <div className="flex items-center justify-between mb-8 pb-4 border-b border-slate-100">
                   <div className="flex items-center space-x-3">
                      <div className={`w-2 h-8 rounded-full bg-gradient-to-b ${
