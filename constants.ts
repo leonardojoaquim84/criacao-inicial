@@ -268,7 +268,7 @@ export const INITIAL_LINKS = [
   },
   {
     id: 'gig-x-sdu',
-    url: 'https://postimg.cc/Hr5qWMJQ',
+    url: 'https://i.postimg.cc/0yHPfdPH/eb6a290e_a926_490e_a1e7_d7ff2f1a439f.jpg',
     title: 'GIG x SDU',
     category: 'consultas',
     description: 'Informativo direto GIG x SDU.',

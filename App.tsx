@@ -4,6 +4,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import Sidebar from './components/Sidebar.tsx';
 import LinkButton from './components/LinkButton.tsx';
 import AddLinkModal from './components/AddLinkModal.tsx';
+import ImageOverlay from './components/ImageOverlay.tsx';
 import { LinkItem } from './types.ts';
 import { INITIAL_LINKS, DEFAULT_CATEGORIES } from './constants.ts';
 import { notifyEvent } from './services/notificationService.ts';
@@ -14,6 +15,7 @@ const App: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [previewImageUrl, setPreviewImageUrl] = useState<string | null>(null);
   const [currentTime, setCurrentTime] = useState(new Date());
 
   useEffect(() => {
@@ -49,7 +51,10 @@ const App: React.FC = () => {
       
       if (query) return matchesSearch;
       return activeCategory ? link.category === activeCategory : false;
-    }).sort((a, b) => b.createdAt - a.createdAt);
+    }).sort((a, b) => {
+      // Prioridade por timestamp, mas mantendo a ordem das constantes iniciais
+      return b.createdAt - a.createdAt;
+    });
   }, [links, activeCategory, searchQuery]);
 
   const currentCategory = useMemo(() => {
@@ -196,6 +201,7 @@ const App: React.FC = () => {
                       <LinkButton 
                         key={link.id} 
                         link={link} 
+                        onPreview={setPreviewImageUrl}
                       />
                     ))}
                   </div>
@@ -224,6 +230,13 @@ const App: React.FC = () => {
         <AddLinkModal 
           onClose={() => setIsModalOpen(false)} 
           onAdd={(linkData) => setLinks(prev => [{ id: crypto.randomUUID(), ...linkData }, ...prev])}
+        />
+      )}
+
+      {previewImageUrl && (
+        <ImageOverlay 
+          url={previewImageUrl} 
+          onClose={() => setPreviewImageUrl(null)} 
         />
       )}
     </div>
