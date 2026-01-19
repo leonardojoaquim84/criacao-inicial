@@ -217,23 +217,23 @@ export const INITIAL_LINKS = [
 
   // --- CONSULTAS ---
   {
-    id: 'consulta-base-contratual',
-    url: 'https://voeazul.service-now.com/sp?id=consulta_de_posicao_transferencia_base',
-    title: 'BASE CONTRATUAL',
-    category: 'consultas',
-    description: 'Consulta de posição e transferência de base no Service Now.',
-    tags: ['base', 'contratual', 'transferência'],
-    createdAt: Date.now() - 2000,
-    isFavorite: false
-  },
-  {
     id: 'consulta-base-virtual',
     url: 'https://voeazul.service-now.com/sp?id=consulta_posicao_base_virtual_escala',
     title: 'BASE VIRTUAL',
     category: 'consultas',
     description: 'Consulta de posição em base virtual de escala no Service Now.',
     tags: ['base', 'virtual', 'escala'],
-    createdAt: Date.now() - 2100,
+    createdAt: Date.now() - 1900,
+    isFavorite: false
+  },
+  {
+    id: 'consulta-base-contratual',
+    url: 'https://voeazul.service-now.com/sp?id=consulta_de_posicao_transferencia_base',
+    title: 'BASE CONTRATUAL',
+    category: 'consultas',
+    description: 'Consulta de posição e transferência de base no Service Now.',
+    tags: ['base', 'contratual', 'transferência'],
+    createdAt: Date.now() - 1910,
     isFavorite: false
   },
   {
@@ -243,7 +243,37 @@ export const INITIAL_LINKS = [
     category: 'consultas',
     description: 'Consulta de previsão de férias no Service Now.',
     tags: ['férias', 'rh', 'escala'],
-    createdAt: Date.now() - 2200,
+    createdAt: Date.now() - 1920,
+    isFavorite: false
+  },
+  {
+    id: 'ocupacao-aeronaves',
+    url: 'https://i.postimg.cc/1zjhG90G/ed95a45a_136b_4817_9b5a_ae0be67ae8b2.jpg',
+    title: 'OCUPAÇÃO DAS AERONAVES',
+    category: 'consultas',
+    description: 'Informativo direto de ocupação das aeronaves.',
+    tags: ['ocupação', 'aeronaves', 'vôos'],
+    createdAt: Date.now() - 1930,
+    isFavorite: false
+  },
+  {
+    id: 'transporte-vcp',
+    url: 'https://i.postimg.cc/SKvF6yLC/3781aa4d_1033_4dc4_9839_c2f3753cbe46.jpg',
+    title: 'TRANSPORTE VCP',
+    category: 'consultas',
+    description: 'Informativo direto de transporte VCP.',
+    tags: ['transporte', 'vcp', 'imagem'],
+    createdAt: Date.now() - 1940,
+    isFavorite: false
+  },
+  {
+    id: 'gig-x-sdu',
+    url: 'https://postimg.cc/Hr5qWMJQ',
+    title: 'GIG x SDU',
+    category: 'consultas',
+    description: 'Informativo direto GIG x SDU.',
+    tags: ['transporte', 'gig', 'sdu', 'imagem'],
+    createdAt: Date.now() - 1950,
     isFavorite: false
   }
 ];

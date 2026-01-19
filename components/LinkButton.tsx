@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { LinkItem } from '../types.ts';
+import { notifyEvent } from '../services/notificationService.ts';
 
 interface LinkButtonProps {
   link: LinkItem;
@@ -17,6 +18,10 @@ const LinkButton: React.FC<LinkButtonProps> = ({ link }) => {
 
   const domain = getDomain(link.url);
 
+  const handleClick = () => {
+    notifyEvent(`🔗 Link acessado: **${link.title}** (${link.url})`);
+  };
+
   return (
     <div className="relative group h-full">
       {/* 3D Depth Layer */}
@@ -25,6 +30,7 @@ const LinkButton: React.FC<LinkButtonProps> = ({ link }) => {
       {/* Main Button Surface */}
       <a 
         href={link.url}
+        onClick={handleClick}
         target="_blank"
         rel="noopener noreferrer"
         className="relative flex items-center w-full min-h-[72px] px-4 py-4 bg-white border border-slate-200 rounded-xl 

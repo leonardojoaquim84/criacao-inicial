@@ -6,6 +6,7 @@ import LinkButton from './components/LinkButton.tsx';
 import AddLinkModal from './components/AddLinkModal.tsx';
 import { LinkItem } from './types.ts';
 import { INITIAL_LINKS, DEFAULT_CATEGORIES } from './constants.ts';
+import { notifyEvent } from './services/notificationService.ts';
 
 const App: React.FC = () => {
   const [links, setLinks] = useState<LinkItem[]>([]);
@@ -14,7 +15,6 @@ const App: React.FC = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentTime, setCurrentTime] = useState(new Date());
-  const [visitorCount, setVisitorCount] = useState<number>(0);
 
   useEffect(() => {
     const saved = localStorage.getItem('workflow_links');
@@ -24,10 +24,8 @@ const App: React.FC = () => {
       setLinks(INITIAL_LINKS as LinkItem[]);
     }
 
-    const storedCount = localStorage.getItem('visitor_count');
-    const newCount = (storedCount ? parseInt(storedCount, 10) : 0) + 1;
-    localStorage.setItem('visitor_count', newCount.toString());
-    setVisitorCount(newCount);
+    // Notificar acesso ao site
+    notifyEvent("🚀 Alguém acessou o Painel de Links Importantes.");
 
     const timer = setInterval(() => {
       setCurrentTime(new Date());
@@ -167,12 +165,6 @@ const App: React.FC = () => {
                     </button>
                   ))}
                 </div>
-
-                <div className="mt-20 opacity-30 select-none">
-                  <p className="text-[9px] font-bold text-slate-400 uppercase tracking-[0.4em]">
-                    Visitante nº {visitorCount}
-                  </p>
-                </div>
               </div>
             ) : (
               <div className="animate-in fade-in h-full relative">
@@ -199,7 +191,6 @@ const App: React.FC = () => {
                 </div>
 
                 {displayLinks.length > 0 ? (
-                  /* Grid ajustado: no máximo 4 colunas em telas grandes para garantir largura suficiente para títulos longos */
                   <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-8 max-w-6xl mx-auto">
                     {displayLinks.map((link) => (
                       <LinkButton 
