@@ -1,4 +1,3 @@
-
 import { Category } from './types';
 
 export const DEFAULT_CATEGORIES: Category[] = [
@@ -68,6 +67,26 @@ export const INITIAL_LINKS = [
     description: 'Sistema de pedidos de uniformes.',
     tags: ['logística', 'vestuário'],
     createdAt: Date.now() - 500,
+    isFavorite: false
+  },
+  {
+    id: 'troca-de-senha',
+    url: 'https://nam10.safelinks.protection.outlook.com/?url=https%3A%2F%2Faccount.activedirectory.windowsazure.com%2FChangePassword.aspx&data=05%7C02%7Cleonardo.joaquim%40voeazul.com.br%7C930ee298d3e84c9677f908de656f140f%7C8f309b91b0604b60bbb5091c51b75cfd%7C0%7C0%7C639059724961638190%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=IrvPWc3qkWB96XTATJI092JYBSuviGziRC4U0ri2CCM%3D&reserved=0',
+    title: 'TROCA DE SENHA',
+    category: 'dia_a_dia',
+    description: 'Portal de alteração de senha do Microsoft Active Directory.',
+    tags: ['senha', 'segurança', 'ti'],
+    createdAt: Date.now() - 550,
+    isFavorite: false
+  },
+  {
+    id: 'desbloqueio-de-senha',
+    url: 'https://nam10.safelinks.protection.outlook.com/?url=https%3A%2F%2Fpasswordreset.microsoftonline.com%2F&data=05%7C02%7Cleonardo.joaquim%40voeazul.com.br%7C930ee298d3e84c9677f908de656f140f%7C8f309b91b0604b60bbb5091c51b75cfd%7C0%7C0%7C639059724961664200%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=PCBWEql6V8HgkHWxy870rIlsBL%2FBgZhv3PrUfLrikIc%3D&reserved=0',
+    title: 'DESBLOQUEIO DE SENHA',
+    category: 'dia_a_dia',
+    description: 'Portal para recuperação e desbloqueio de senha Microsoft.',
+    tags: ['senha', 'desbloqueio', 'segurança'],
+    createdAt: Date.now() - 575,
     isFavorite: false
   },
   {
