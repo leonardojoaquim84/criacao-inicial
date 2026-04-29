@@ -37,9 +37,11 @@
     // Correção para bibliotecas que dependem do objeto process
     window.process = { env: { API_KEY: "" } };
 </script>
+<link rel="stylesheet" href="/index.css">
 </head>
 <body>
     <div id="root"></div>
     <script type="module" src="./index.tsx"></script>
+<script type="module" src="/index.tsx"></script>
 </body>
 </html>

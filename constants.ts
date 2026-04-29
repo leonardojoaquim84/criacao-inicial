@@ -294,5 +294,15 @@ export const INITIAL_LINKS = [
     tags: ['transporte', 'gig', 'sdu', 'imagem'],
     createdAt: Date.now() - 1950,
     isFavorite: false
+  },
+  {
+    id: 'consulta-licencas-anac',
+    url: 'https://consultadelicencas.anac.gov.br/consultadelicencas/',
+    title: 'CONSULTA DE LICENÇAS ANAC',
+    category: 'consultas',
+    description: 'Sistema oficial da ANAC para consulta de licenças e certificados de tripulantes.',
+    tags: ['anac', 'licenças', 'documentação', 'tripulante'],
+    createdAt: Date.now() - 1960,
+    isFavorite: false
   }
 ];
