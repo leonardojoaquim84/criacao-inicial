@@ -20,12 +20,35 @@ const App: React.FC = () => {
 
   useEffect(() => {
     const saved = localStorage.getItem('workflow_links');
+    let loadedLinks: LinkItem[] = [];
+
     if (saved) {
-      setLinks(JSON.parse(saved));
+      try {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          // Identify predefined link IDs to avoid duplicates
+          const defaultIds = new Set(INITIAL_LINKS.map(item => item.id));
+          
+          // Get only custom links that the user manually added
+          const customLinks = parsed.filter(item => item && item.id && !defaultIds.has(item.id));
+          
+          // Use up-to-date predefined links plus any custom ones
+          loadedLinks = [
+            ...(INITIAL_LINKS as LinkItem[]),
+            ...customLinks
+          ];
+        } else {
+          loadedLinks = INITIAL_LINKS as LinkItem[];
+        }
+      } catch (e) {
+        console.error("Erro ao carregar links salvos, restaurando padrões:", e);
+        loadedLinks = INITIAL_LINKS as LinkItem[];
+      }
     } else {
-      setLinks(INITIAL_LINKS as LinkItem[]);
+      loadedLinks = INITIAL_LINKS as LinkItem[];
     }
 
+    setLinks(loadedLinks);
     // Notificar acesso ao site
     notifyEvent("🚀 Alguém acessou o Painel de Links Importantes.");
 
@@ -37,7 +60,9 @@ const App: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    localStorage.setItem('workflow_links', JSON.stringify(links));
+    if (links.length > 0) {
+      localStorage.setItem('workflow_links', JSON.stringify(links));
+    }
   }, [links]);
 
   const displayLinks = useMemo(() => {

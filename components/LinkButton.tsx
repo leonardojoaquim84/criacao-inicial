@@ -24,7 +24,7 @@ const LinkButton: React.FC<LinkButtonProps> = ({ link, onPreview }) => {
     
     // Lista de IDs ou padrões de URL que devem abrir o preview em tela cheia
     const isImageLink = link.url.match(/\.(jpeg|jpg|gif|png|webp)(\?.*)?$/i) != null;
-    const isSpecialPreview = link.id === 'ocupacao-aeronaves' || link.id === 'transporte-vcp' || link.id === 'gig-x-sdu';
+    const isSpecialPreview = link.id === 'ocupacao-aeronaves' || link.id === 'gig-x-sdu';
 
     if (onPreview && (isSpecialPreview || isImageLink)) {
       e.preventDefault();
