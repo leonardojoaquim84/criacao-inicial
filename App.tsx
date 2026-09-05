@@ -245,6 +245,16 @@ const App: React.FC = () => {
                     </p>
                   </div>
                 )}
+
+                <div className="flex items-center justify-end mt-12 pt-4 border-t border-slate-100">
+                  <button 
+                    onClick={handleGoHome}
+                    className="group flex items-center space-x-2 px-4 py-2 bg-transparent text-slate-400 hover:text-blue-600 transition-all text-[10px] font-black uppercase tracking-[0.2em]"
+                  >
+                    <i className="fa-solid fa-chevron-left text-[8px] group-hover:-translate-x-1 transition-transform"></i>
+                    <span>Voltar ao Início</span>
+                  </button>
+                </div>
               </div>
             )}
           </div>

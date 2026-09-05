@@ -233,6 +233,16 @@ export const INITIAL_LINKS = [
     createdAt: Date.now() - 1500,
     isFavorite: false
   },
+  {
+    id: 'voos-cnf',
+    url: 'https://www.bh-airport.com.br/pt-BR/find-your-flight',
+    title: 'VOOS CNF',
+    category: 'passe_livre',
+    description: 'Consulta de voos no Aeroporto Internacional de Belo Horizonte (Confins).',
+    tags: ['voos', 'cnf', 'confins', 'aeroporto', 'viagem'],
+    createdAt: Date.now() - 1600,
+    isFavorite: false
+  },
 
   // --- CONSULTAS ---
   {
