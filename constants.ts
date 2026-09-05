@@ -266,6 +266,16 @@ export const INITIAL_LINKS = [
     isFavorite: false
   },
   {
+    id: 'entretenimento-a-bordo',
+    url: 'https://i.postimg.cc/L40Zw1Vj/IMG-2817.jpg',
+    title: 'ENTERTAINMENTO A BORDO',
+    category: 'consultas',
+    description: 'Informativo de entretenimento a bordo.',
+    tags: ['entretenimento', 'bordo', 'aeronaves', 'imagem'],
+    createdAt: Date.now() - 1925,
+    isFavorite: false
+  },
+  {
     id: 'ocupacao-aeronaves',
     url: 'https://i.postimg.cc/1zjhG90G/ed95a45a_136b_4817_9b5a_ae0be67ae8b2.jpg',
     title: 'OCUPAÇÃO DAS AERONAVES',
